@@ -8,15 +8,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private List<CostBean> mCostBeanList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mCostBeanList=new ArrayList<>();
+        ListView costList=findViewById(R.id.lv_main);
+        initCostDate();
+        costList.setAdapter(new CostListAdapter(this,mCostBeanList));
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -26,6 +36,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void initCostDate() {
+        for (int i=0;i<6;i++) {
+            CostBean costBean=new CostBean();
+            costBean.costTitle="mock";
+            costBean.costDate="11-11";
+            costBean.costMoney="20";
+            mCostBeanList.add(costBean);
+        }
     }
 
     @Override
